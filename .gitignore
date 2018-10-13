@@ -1,0 +1,3 @@
+build/
+.idea/sonarlint/issuestore
+.gradle/

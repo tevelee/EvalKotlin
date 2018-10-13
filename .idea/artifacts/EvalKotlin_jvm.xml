@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="EvalKotlin-jvm">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="EvalKotlin-jvm.jar">
+      <element id="module-output" name="EvalKotlin_jvmMain" />
+    </root>
+  </artifact>
+</component>
