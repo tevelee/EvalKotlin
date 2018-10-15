@@ -1,8 +1,12 @@
 package sample
 
-class Matcher<T, E: Evaluator<*>>(val elements: List<PatternElement>) {
-    data class ActiveVariable(val name: String, val options: VariableOptions, var value: String)
+data class ActiveVariable(val name: String, var value: String, val metadata: Variable<*>)
 
+class Matcher<T>(
+    val elements: List<PatternElement>,
+    val options: PatternOptions,
+    val processor: VariableProcessor
+) {
     fun match(string: String, from: Int = 0, renderer: (variables: Map<String, Any>) -> T?): MatchResult {
         var currentlyActiveVariable: ActiveVariable? = null
         var elementIndex = initialIndex()
@@ -13,42 +17,29 @@ class Matcher<T, E: Evaluator<*>>(val elements: List<PatternElement>) {
             val result = element.matches(remainder)
             when (result) {
                 is MatchResult.NoMatch ->
-                    if (currentlyActiveVariable != null) {
-                        currentlyActiveVariable.value += remainder.substring(0, 1)
-                        remainder = remainder.drop(1)
-                    }
-                    else
-                        return MatchResult.NoMatch()
+                    remainder = proceed(currentlyActiveVariable, remainder) ?: return MatchResult.NoMatch()
                 is MatchResult.PossibleMatch ->
                     return MatchResult.PossibleMatch()
                 is MatchResult.AnyMatch -> {
-                    if (currentlyActiveVariable == null && element is GenericVariable<*, *>)
-                        currentlyActiveVariable = ActiveVariable(element.name, element.options, String())
+                    if (currentlyActiveVariable == null && element is Variable<*>)
+                        currentlyActiveVariable = ActiveVariable(element.name, String(), element)
                     if (result.exhaustive) {
-                        if (currentlyActiveVariable != null) {
-                            currentlyActiveVariable.value += remainder.substring(0, 1)
-                            remainder = remainder.drop(1)
-                        }
+                        remainder = proceed(currentlyActiveVariable, remainder) as String
                         if (remainder.isEmpty()) {
-                            if (currentlyActiveVariable != null)
-                                variables[currentlyActiveVariable.name] = currentlyActiveVariable.value
-                            else
-                                return MatchResult.PossibleMatch()
-                            elementIndex++
+                            registerVariable(currentlyActiveVariable, variables) ?: return MatchResult.PossibleMatch()
+                            elementIndex = nextElement(elementIndex)
                         }
                     }
                     else
-                        elementIndex++
+                        elementIndex = nextElement(elementIndex)
                 }
                 is MatchResult.ExactMatch<*> -> {
                     variables.putAll(result.variables)
-                    if (currentlyActiveVariable != null)
-                        variables[currentlyActiveVariable.name] = currentlyActiveVariable.value.trim()
-                    else
-                        return MatchResult.NoMatch()
+                    registerVariable(currentlyActiveVariable, variables) ?: return MatchResult.NoMatch()
                     currentlyActiveVariable = null
-                    elementIndex++
-                    remainder = remainder.drop(result.length).trim()
+                    elementIndex = nextElement(elementIndex)
+                    remainder = remainder.drop(result.length)
+                    remainder = trim(remainder)
                 }
             }
         } while (notFinished(elementIndex))
@@ -60,7 +51,31 @@ class Matcher<T, E: Evaluator<*>>(val elements: List<PatternElement>) {
             MatchResult.NoMatch()
     }
 
-    private fun initialIndex(): Int = 0
-
-    private fun notFinished(elementIndex: Int): Boolean = elementIndex <= elements.lastIndex
+    private fun initialIndex(): Int = if (options.backwardMatch) elements.lastIndex else 0
+    private fun nextElement(elementIndex: Int): Int = if (options.backwardMatch) elementIndex - 1 else elementIndex + 1
+    private fun drop(remainder: String) = if (options.backwardMatch) remainder.dropLast(1) else remainder.drop(1)
+    private fun notFinished(elementIndex: Int): Boolean = if (options.backwardMatch) elementIndex > 0 else elementIndex <= elements.lastIndex
+    private fun trim(remainder: String): String = if (options.backwardMatch) remainder.trimStart() else remainder.trimEnd()
+    private fun appendNextCharacterToVariable(currentlyActiveVariable: ActiveVariable, remainder: String) {
+        if (options.backwardMatch) {
+            currentlyActiveVariable.value = remainder.last() + currentlyActiveVariable.value
+        } else {
+            currentlyActiveVariable.value += remainder.first()
+        }
+    }
+    private fun proceed(currentlyActiveVariable: ActiveVariable?, remainder: String): String? {
+        if (currentlyActiveVariable != null) {
+            appendNextCharacterToVariable(currentlyActiveVariable, remainder)
+            return drop(remainder)
+        }
+        return null
+    }
+    private fun registerVariable(currentlyActiveVariable: ActiveVariable?, variables: MutableMap<String, Any>): Boolean? {
+        if (currentlyActiveVariable != null) {
+            val value = processor.process(currentlyActiveVariable)
+            value?.let { variables[currentlyActiveVariable.name] = it }
+            return !currentlyActiveVariable.metadata.options.acceptsNullValue && value != null
+        }
+        return null
+    }
 }

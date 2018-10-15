@@ -4,7 +4,7 @@ interface FunctionInterface<E> {
     fun convert(input: String, interpreter: E): Any?
 }
 
-class Function<T, E : Interpreter<*>>(val patterns: List<Pattern<T, E>>) : FunctionInterface<E> {
+class Function<T, E : Interpreter<Any>>(val patterns: List<Pattern<T, E>>) : FunctionInterface<E> {
     override fun convert(input: String, interpreter: E): Any? {
         val result = matchStatement(patterns, input, interpreter)
         return when (result) {
@@ -14,9 +14,9 @@ class Function<T, E : Interpreter<*>>(val patterns: List<Pattern<T, E>>) : Funct
     }
 }
 
-data class MatchStatementResult<T, E : Interpreter<*>>(val element: Pattern<T, E>, val result: MatchResult)
+data class MatchStatementResult<T, I : Interpreter<Any>>(val element: Pattern<T, I>, val result: MatchResult)
 
-fun <T, E : Interpreter<*>> matchStatement(statements: List<Pattern<T, E>>, input: String, interpreter: E, from: Int = 0): MatchResult {
+fun <T, I : Interpreter<Any>> matchStatement(statements: List<Pattern<T, I>>, input: String, interpreter: I, from: Int = 0): MatchResult {
     val results = statements.asSequence().map {
         MatchStatementResult(it, it.matches(input, from, interpreter))
     }

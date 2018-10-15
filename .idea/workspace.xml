@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="59452607-51a9-4fda-86d1-58dfb957d320" name="Default Changelist" comment="" />
+    <list default="true" id="59452607-51a9-4fda-86d1-58dfb957d320" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Context.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/sample/VariableProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Function.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Function.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Literal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Literal.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Matcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Matcher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Pattern.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Pattern.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/sample/TypedInterpreter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/sample/TypedInterpreter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Variable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/sample/Variable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonTest/kotlin/sample/TypedInterpreter_Funcion_IntegrationTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonTest/kotlin/sample/TypedInterpreter_Funcion_IntegrationTest.kt" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,58 +57,37 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commonTest/kotlin/sample/TypedInterpreter_Funcion_IntegrationTest.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
-              <folding>
-                <element signature="e#16#71#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Variable.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="73" selection-start-line="6" selection-start-column="73" selection-end-line="6" selection-end-column="73" />
+            <state relative-caret-position="135">
+              <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Matcher.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="45" column="111" selection-start-line="45" selection-start-column="111" selection-end-line="45" selection-end-column="111" />
+            <state relative-caret-position="-324">
+              <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Keyword.kt">
+        <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/MatchResult.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="75">
+              <caret line="5" column="86" selection-start-line="5" selection-start-column="86" selection-end-line="5" selection-end-column="86" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-80/a1b84434c5a97d8d90f90c09ac3b32f476f5839c/kotlin-stdlib-common-1.3.0-rc-80-sources.jar!/generated/_Strings.kt">
+        <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/VariableProcessor.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="264" column="18" selection-start-line="264" selection-start-column="18" selection-end-line="264" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-80/a1b84434c5a97d8d90f90c09ac3b32f476f5839c/kotlin-stdlib-common-1.3.0-rc-80-sources.jar!/kotlin/text/Strings.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="123" column="25" selection-start-line="123" selection-start-column="25" selection-end-line="123" selection-end-column="25" />
+            <state relative-caret-position="30">
+              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -104,8 +95,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Pattern.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="240">
+              <caret line="16" column="55" lean-forward="true" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/TypedInterpreter.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="15" column="78" selection-start-line="15" selection-start-column="78" selection-end-line="15" selection-end-column="78" />
             </state>
           </provider>
         </entry>
@@ -113,26 +113,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Function.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="48" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
+            <state relative-caret-position="90">
+              <caret line="6" column="38" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/TypedInterpreter.kt">
+        <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Context.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" selection-start-line="24" selection-end-line="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-80/a1b84434c5a97d8d90f90c09ac3b32f476f5839c/kotlin-stdlib-common-1.3.0-rc-80-sources.jar!/generated/_Sequences.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="137" selection-start-line="137" selection-end-line="137" />
+            <state relative-caret-position="75">
+              <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -152,7 +143,16 @@
     <findStrings>
       <find>mockito</find>
       <find>Variable</find>
+      <find>Matcher</find>
+      <find>Matcher(</find>
+      <find>drop</find>
+      <find>GenericV</find>
+      <find>generic</find>
+      <find>registerVariable</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -167,15 +167,17 @@
         <option value="$PROJECT_DIR$/src/commonTest/kotlin/sample/LiteralTest.kt" />
         <option value="$PROJECT_DIR$/src/commonTest/kotlin/sample/TypedInterpreterTest.kt" />
         <option value="$PROJECT_DIR$/src/commonTest/kotlin/sample/TypedInterpreter_DataType_IntegrationTest.kt" />
-        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/MatchResult.kt" />
-        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Pattern.kt" />
-        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Literal.kt" />
-        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/TypedInterpreter.kt" />
         <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Keyword.kt" />
-        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Variable.kt" />
-        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Function.kt" />
         <option value="$PROJECT_DIR$/src/commonTest/kotlin/sample/TypedInterpreter_Funcion_IntegrationTest.kt" />
+        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Literal.kt" />
+        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/MatchResult.kt" />
+        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/VariableProcessor.kt" />
+        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Variable.kt" />
         <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Matcher.kt" />
+        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Context.kt" />
+        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Pattern.kt" />
+        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/Function.kt" />
+        <option value="$PROJECT_DIR$/src/commonMain/kotlin/sample/TypedInterpreter.kt" />
       </list>
     </option>
   </component>
@@ -185,9 +187,10 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1680" />
-    <option name="height" value="1050" />
+    <option name="height" value="964" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -274,7 +277,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539431208983" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539619429212" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="Arquillian JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
     <property name="external.system.task.project.file.to.start" value="$PROJECT_DIR$" />
@@ -369,6 +372,26 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="TypedInterpreter_Function_IntegrationTest.whenEvaluatedWithFunctionBackwards_thenReturnsThePlainValue" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;sample.TypedInterpreter_Function_IntegrationTest.whenEvaluatedWithFunctionBackwards_thenReturnsThePlainValue&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanJvmTest" />
+            <option value=":jvmTest" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="TypedInterpreter_Function_IntegrationTest.whenEvaluatedWithFunction_thenReturnsThePlainValue" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -424,10 +447,12 @@
       <item itemvalue="Gradle.EvalKotlin [dependencies]" />
       <item itemvalue="Gradle.TypedInterpreter_Function_IntegrationTest.whenEvaluatedWithFunction_thenReturnsThePlainValue" />
       <item itemvalue="JUnit.Tests" />
+      <item itemvalue="Gradle.TypedInterpreter_Function_IntegrationTest.whenEvaluatedWithFunctionBackwards_thenReturnsThePlainValue" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tests" />
+        <item itemvalue="Gradle.TypedInterpreter_Function_IntegrationTest.whenEvaluatedWithFunctionBackwards_thenReturnsThePlainValue" />
         <item itemvalue="Gradle.TypedInterpreter_Function_IntegrationTest.whenEvaluatedWithFunction_thenReturnsThePlainValue" />
         <item itemvalue="Gradle.EvalKotlin [dependencies]" />
       </list>
@@ -450,39 +475,39 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Tests - 2018.10.13 at 13h 37m 27s.xml">
+    <history-entry file="Tests - 2018.10.15 at 11h 28m 51s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="Tests - 2018.10.13 at 13h 41m 57s.xml">
+    <history-entry file="Tests - 2018.10.15 at 11h 29m 01s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="Tests - 2018.10.13 at 13h 42m 03s.xml">
+    <history-entry file="Tests - 2018.10.15 at 11h 29m 23s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="Tests - 2018.10.13 at 13h 42m 06s.xml">
+    <history-entry file="Tests - 2018.10.15 at 11h 30m 02s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="Tests - 2018.10.13 at 13h 43m 26s.xml">
+    <history-entry file="Tests - 2018.10.15 at 13h 55m 47s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="Tests - 2018.10.13 at 13h 43m 29s.xml">
+    <history-entry file="Tests - 2018.10.15 at 17h 57m 14s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="Tests - 2018.10.13 at 13h 44m 52s.xml">
+    <history-entry file="Tests - 2018.10.15 at 17h 59m 59s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="Tests - 2018.10.13 at 13h 45m 44s.xml">
+    <history-entry file="Tests - 2018.10.15 at 18h 03m 09s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="Tests - 2018.10.13 at 13h 46m 34s.xml">
+    <history-entry file="Tests - 2018.10.15 at 18h 03m 18s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="Tests - 2018.10.13 at 13h 46m 36s.xml">
+    <history-entry file="Tests - 2018.10.15 at 18h 03m 43s.xml">
       <configuration name="Tests" configurationId="GradleRunConfiguration" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31401000" />
+    <option name="totallyTimeSpent" value="44798000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -494,7 +519,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="964" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2924298" />
@@ -505,9 +530,9 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32964602" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.84504795" visible="true" weight="0.31734693" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4981685" weight="0.36632654" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32871288" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.84504795" visible="true" weight="0.35665137" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4981685" weight="0.36534652" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49893504" weight="0.32815966" />
@@ -677,20 +702,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/MatchResult.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Sample.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-80/a1b84434c5a97d8d90f90c09ac3b32f476f5839c/kotlin-stdlib-common-1.3.0-rc-80-sources.jar!/kotlin/collections/Collections.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -722,20 +733,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/DataType.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Literal.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/commonTest/kotlin/sample/TypedInterpreter_DataType_IntegrationTest.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -753,48 +750,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-80/a1b84434c5a97d8d90f90c09ac3b32f476f5839c/kotlin-stdlib-common-1.3.0-rc-80-sources.jar!/generated/_Strings.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="264" column="18" selection-start-line="264" selection-start-column="18" selection-end-line="264" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-80/a1b84434c5a97d8d90f90c09ac3b32f476f5839c/kotlin-stdlib-common-1.3.0-rc-80-sources.jar!/kotlin/text/Strings.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="123" column="25" selection-start-line="123" selection-start-column="25" selection-end-line="123" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Keyword.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Variable.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="73" selection-start-line="6" selection-start-column="73" selection-end-line="6" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonTest/kotlin/sample/TypedInterpreter_Funcion_IntegrationTest.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-          <folding>
-            <element signature="e#16#71#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/TypedInterpreter.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
         </state>
       </provider>
     </entry>
@@ -805,24 +764,104 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Function.kt">
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Keyword.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="48" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
+        <state relative-caret-position="30">
+          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Pattern.kt">
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/DataType.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="45">
+          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Sample.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonTest/kotlin/sample/TypedInterpreter_Funcion_IntegrationTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#16#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0-rc-80/a1b84434c5a97d8d90f90c09ac3b32f476f5839c/kotlin-stdlib-common-1.3.0-rc-80-sources.jar!/generated/_Strings.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="815" column="73" lean-forward="true" selection-start-line="815" selection-start-column="73" selection-end-line="815" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Literal.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/MatchResult.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="86" selection-start-line="5" selection-start-column="86" selection-end-line="5" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Variable.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/VariableProcessor.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Matcher.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="45" column="111" selection-start-line="45" selection-start-column="111" selection-end-line="45" selection-end-column="111" />
+        <state relative-caret-position="-324">
+          <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Context.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Pattern.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="55" lean-forward="true" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/Function.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="38" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commonMain/kotlin/sample/TypedInterpreter.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="15" column="78" selection-start-line="15" selection-start-column="78" selection-end-line="15" selection-end-column="78" />
         </state>
       </provider>
     </entry>

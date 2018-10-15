@@ -7,3 +7,5 @@ class Literal<T>(val convertBlock: (input: String, interpreter: TypedInterpreter
         return convertBlock(input, interpreter)
     }
 }
+
+
