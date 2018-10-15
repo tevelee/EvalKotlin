@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 class TypedInterpreter_Function_IntegrationTest {
     @Test
     fun whenEvaluatedWithFunction_thenReturnsThePlainValue() {
-        val pattern = Pattern<String, TypedInterpreter>(listOf(Variable("lhs"), Keyword("+"), Variable("rhs", true))) { variables, _ ->
+        val pattern = Pattern<String, TypedInterpreter>(Variable<String>("lhs") + Keyword("+") + Variable<String>("rhs", VariableOptions(exhaustive = true))) { variables, _ ->
             val lhs = variables["lhs"] as? String
             val rhs = variables["rhs"] as? String
             if (lhs != null && rhs != null) lhs + rhs else null

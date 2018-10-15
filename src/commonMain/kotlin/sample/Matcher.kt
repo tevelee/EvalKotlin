@@ -1,9 +1,9 @@
 package sample
 
-class Matcher(val elements: List<PatternElement>) {
-    data class ActiveVariable(val metadata: VariableInterface, var value: String)
+class Matcher<T, E: Evaluator<*>>(val elements: List<PatternElement>) {
+    data class ActiveVariable(val name: String, val options: VariableOptions, var value: String)
 
-    fun <T> match(string: String, from: Int = 0, renderer: (variables: Map<String, Any>) -> T?): MatchResult {
+    fun match(string: String, from: Int = 0, renderer: (variables: Map<String, Any>) -> T?): MatchResult {
         var currentlyActiveVariable: ActiveVariable? = null
         var elementIndex = initialIndex()
         var remainder = string.substring(startIndex = from)
@@ -22,8 +22,8 @@ class Matcher(val elements: List<PatternElement>) {
                 is MatchResult.PossibleMatch ->
                     return MatchResult.PossibleMatch()
                 is MatchResult.AnyMatch -> {
-                    if (currentlyActiveVariable == null && element is Variable)
-                        currentlyActiveVariable = ActiveVariable(element, String())
+                    if (currentlyActiveVariable == null && element is GenericVariable<*, *>)
+                        currentlyActiveVariable = ActiveVariable(element.name, element.options, String())
                     if (result.exhaustive) {
                         if (currentlyActiveVariable != null) {
                             currentlyActiveVariable.value += remainder.substring(0, 1)
@@ -31,7 +31,7 @@ class Matcher(val elements: List<PatternElement>) {
                         }
                         if (remainder.isEmpty()) {
                             if (currentlyActiveVariable != null)
-                                variables[currentlyActiveVariable.metadata.name] = currentlyActiveVariable.value
+                                variables[currentlyActiveVariable.name] = currentlyActiveVariable.value
                             else
                                 return MatchResult.PossibleMatch()
                             elementIndex++
@@ -43,7 +43,7 @@ class Matcher(val elements: List<PatternElement>) {
                 is MatchResult.ExactMatch<*> -> {
                     variables.putAll(result.variables)
                     if (currentlyActiveVariable != null)
-                        variables[currentlyActiveVariable.metadata.name] = currentlyActiveVariable.value.trim()
+                        variables[currentlyActiveVariable.name] = currentlyActiveVariable.value.trim()
                     else
                         return MatchResult.NoMatch()
                     currentlyActiveVariable = null

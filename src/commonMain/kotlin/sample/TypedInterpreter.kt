@@ -6,7 +6,7 @@ interface Evaluator<EvaluatedType> {
 
 interface Interpreter<EvaluatedType>: Evaluator<EvaluatedType>
 
-class TypedInterpreter(private val dataTypes: List<DataTypeInterface> = listOf(),
+class TypedInterpreter(private val dataTypes: List<DataType<*>> = listOf(),
                        private val functions: List<Function<*, TypedInterpreter>> = listOf()) : Interpreter<Any?> {
     override fun evaluate(expression: String): Any? {
         return function(expression) ?: dataType(expression)
