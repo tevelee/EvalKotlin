@@ -10,8 +10,8 @@ open class Variable<T>(
     val options: VariableOptions = VariableOptions(),
     val map: (input: Any, interpreter: Interpreter<*>) -> T? = { input, _ -> input as? T }
 ): PatternElement {
-    override fun matches(prefix: String): MatchResult {
-        return MatchResult.AnyMatch(options.exhaustive)
+    override fun matches(prefix: String, options: PatternOptions): MatchResult {
+        return MatchResult.AnyMatch(this.options.exhaustive)
     }
 }
 

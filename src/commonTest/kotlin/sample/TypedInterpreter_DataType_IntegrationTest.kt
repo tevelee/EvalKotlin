@@ -53,7 +53,7 @@ class TypedInterpreter_DataType_IntegrationTest {
     fun whenEvaluatedWithNoTypes_thenReturnsNull() {
         val interpreter = TypedInterpreter(listOf())
 
-        val value = interpreter.evaluate("anything")
+        val value = interpreter.evaluateOrNull("anything")
 
         assertNull(value)
     }

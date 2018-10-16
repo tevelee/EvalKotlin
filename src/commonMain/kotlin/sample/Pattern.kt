@@ -1,7 +1,7 @@
 package sample
 
 interface PatternElement {
-    fun matches(prefix: String): MatchResult
+    fun matches(prefix: String, options: PatternOptions): MatchResult
 }
 
 operator fun PatternElement.plus(other: PatternElement) = listOf(this, other)

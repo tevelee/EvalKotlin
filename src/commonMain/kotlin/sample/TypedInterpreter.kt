@@ -7,16 +7,16 @@ interface Evaluator<EvaluatedType> {
 
 interface Interpreter<EvaluatedType>: Evaluator<EvaluatedType> {
     val context: Context
-    val interpreterForEvaluatingVariables: Interpreter<Any>
+    val interpreterForEvaluatingVariables: Interpreter<*>
     fun evaluate(expression: String, context: Context = Context()): EvaluatedType
     fun evaluateOrNull(expression: String, context: Context = Context()): EvaluatedType?
 }
 
 class TypedInterpreter(private val dataTypes: List<DataType<*>> = listOf(),
-                       private val functions: List<Function<*, Interpreter<Any>>> = listOf(),
+                       private val functions: List<Function<*>> = listOf(),
                        override val context: Context = Context()
 ) : Interpreter<Any> {
-    override val interpreterForEvaluatingVariables: Interpreter<Any>
+    override val interpreterForEvaluatingVariables: Interpreter<*>
         get() { return this }
 
     override fun evaluate(expression: String): Any = evaluate(expression, Context())
@@ -27,7 +27,7 @@ class TypedInterpreter(private val dataTypes: List<DataType<*>> = listOf(),
         this.context.merge(context)
 
         val input = expression.trim()
-        return function(input) ?: dataType(input)
+        return dataType(input) ?: function(input)
     }
 
     private fun dataType(expression: String) = dataTypes
@@ -37,6 +37,7 @@ class TypedInterpreter(private val dataTypes: List<DataType<*>> = listOf(),
         .firstOrNull()
 
     private fun function(expression: String) = functions
+        .reversed()
         .asSequence()
         .map { it.convert(expression, this) }
         .filterNotNull()

@@ -14,7 +14,7 @@ class Matcher<T>(
         val variables: MutableMap<String, Any> = mutableMapOf()
         do {
             val element = elements[elementIndex]
-            val result = element.matches(remainder)
+            val result = element.matches(remainder, options)
             when (result) {
                 is MatchResult.NoMatch ->
                     remainder = proceed(currentlyActiveVariable, remainder) ?: return MatchResult.NoMatch()
@@ -38,7 +38,7 @@ class Matcher<T>(
                     registerVariable(currentlyActiveVariable, variables) ?: return MatchResult.NoMatch()
                     currentlyActiveVariable = null
                     elementIndex = nextElement(elementIndex)
-                    remainder = remainder.drop(result.length)
+                    remainder = drop(remainder, result.length)
                     remainder = trim(remainder)
                 }
             }
@@ -53,8 +53,8 @@ class Matcher<T>(
 
     private fun initialIndex(): Int = if (options.backwardMatch) elements.lastIndex else 0
     private fun nextElement(elementIndex: Int): Int = if (options.backwardMatch) elementIndex - 1 else elementIndex + 1
-    private fun drop(remainder: String) = if (options.backwardMatch) remainder.dropLast(1) else remainder.drop(1)
-    private fun notFinished(elementIndex: Int): Boolean = if (options.backwardMatch) elementIndex > 0 else elementIndex <= elements.lastIndex
+    private fun drop(remainder: String, length: Int) = if (options.backwardMatch) remainder.dropLast(length) else remainder.drop(length)
+    private fun notFinished(elementIndex: Int): Boolean = if (options.backwardMatch) elementIndex >= 0 else elementIndex <= elements.lastIndex
     private fun trim(remainder: String): String = if (options.backwardMatch) remainder.trimStart() else remainder.trimEnd()
     private fun appendNextCharacterToVariable(currentlyActiveVariable: ActiveVariable, remainder: String) {
         if (options.backwardMatch) {
@@ -66,7 +66,7 @@ class Matcher<T>(
     private fun proceed(currentlyActiveVariable: ActiveVariable?, remainder: String): String? {
         if (currentlyActiveVariable != null) {
             appendNextCharacterToVariable(currentlyActiveVariable, remainder)
-            return drop(remainder)
+            return drop(remainder, 1)
         }
         return null
     }
