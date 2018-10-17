@@ -7,7 +7,7 @@ interface PatternElement {
 operator fun PatternElement.plus(other: PatternElement) = listOf(this, other)
 operator fun List<PatternElement>.plus(other: PatternElement) = transform { add(other) }
 
-typealias MatcherBlock<T, E> = (variables: Map<String, Any>, evaluator: E) -> T?
+typealias MatcherBlock<T, E> = (variables: Map<String, Any>, evaluator: E, context: Context) -> T?
 
 data class PatternOptions(val backwardMatch: Boolean = false)
 
@@ -23,9 +23,9 @@ class Pattern<T, I: Interpreter<*>>(elements: List<PatternElement>,
         return elements.replace(index, newVariable)
     }
 
-    fun matches(string: String, from: Int = 0, interpreter: I, context: Context): MatchResult {
+    fun matches(string: String, startIndex: Int = 0, interpreter: I, context: Context): MatchResult {
         val variableProcessor = VariableProcessor(interpreter.interpreterForEvaluatingVariables, context)
-        val result = Matcher<T>(elements, options, variableProcessor).match(string, from) { matcher(it, interpreter) }
+        val result = Matcher<T>(elements, options, variableProcessor).match(string, startIndex) { matcher(it, interpreter, context) }
         if (result is MatchResult.ExactMatch<*>) {
             //TODO: print debug info
         }

@@ -16,9 +16,9 @@ class Function<T>(private val patterns: List<Pattern<T, TypedInterpreter>>) : Fu
 
 data class MatchStatementResult<T, I : Interpreter<*>>(val element: Pattern<T, I>, val result: MatchResult)
 
-fun <T, I : Interpreter<*>> matchStatement(statements: List<Pattern<T, I>>, input: String, interpreter: I, context: Context, from: Int = 0): MatchResult {
+fun <T, I : Interpreter<*>> matchStatement(statements: List<Pattern<T, I>>, input: String, interpreter: I, context: Context, startIndex: Int = 0): MatchResult {
     val results = statements.asSequence().map {
-        MatchStatementResult(it, it.matches(input, from, interpreter, context))
+        MatchStatementResult(it, it.matches(input, startIndex, interpreter, context))
     }
     val matchingElement = results.firstOrNull { it.result is MatchResult.ExactMatch<*> }
     return when {
