@@ -65,7 +65,4 @@ class TypedInterpreter(private val dataTypes: List<DataType<*>> = listOf(),
         ?.run { call(value) }
 }
 
-inline fun <T> T?.alsoIfNotNull(block: (T) -> Unit): T? {
-    if (this != null) block(this)
-    return this
-}
+inline fun <T> T?.alsoIfNotNull(block: (T) -> Unit): T? = also { if (it != null) block(it) }

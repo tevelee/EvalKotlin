@@ -52,7 +52,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     private fun concatOperator(): Function<String> {
-        val pattern = Pattern<String, TypedInterpreter>(Variable<String>("lhs") + Keyword("+") + Variable<String>("rhs", VariableOptions(exhaustive = true))) { variables, _ ->
+        val pattern = Pattern<String, TypedInterpreter>(Variable<String>("lhs") + Keyword("+") + Variable<String>("rhs")) { variables, _ ->
             val lhs = variables["lhs"] as? String ?: return@Pattern null
             val rhs = variables["rhs"] as? String ?: return@Pattern null
             lhs + rhs
@@ -62,7 +62,7 @@ class TypedInterpreter_Function_IntegrationTest {
 
     private fun multiplyOperator(): Function<Int> {
         val pattern = Pattern<Int, TypedInterpreter>(
-            Variable<Int>("lhs", VariableOptions(exhaustive = true)) + Keyword("*") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) { variables, _ ->
+            Variable<Int>("lhs") + Keyword("*") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) { variables, _ ->
             val lhs = variables["lhs"] as? Int ?: return@Pattern null
             val rhs = variables["rhs"] as? Int ?: return@Pattern null
             lhs * rhs
@@ -72,7 +72,7 @@ class TypedInterpreter_Function_IntegrationTest {
 
     private fun addOperator(): Function<Int> {
         val pattern = Pattern<Int, TypedInterpreter>(
-            Variable<Int>("lhs", VariableOptions(exhaustive = true)) + Keyword("+") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) { variables, _ ->
+            Variable<Int>("lhs") + Keyword("+") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) { variables, _ ->
             val lhs = variables["lhs"] as? Int ?: return@Pattern null
             val rhs = variables["rhs"] as? Int ?: return@Pattern null
             lhs + rhs
