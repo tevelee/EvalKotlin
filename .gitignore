@@ -1,3 +1,4 @@
 build/
 .idea/sonarlint/issuestore
+.idea/workspace.xml
 .gradle/

@@ -16,6 +16,9 @@ class TypedInterpreter(private val dataTypes: List<DataType<*>> = listOf(),
                        private val functions: List<Function<*>> = listOf(),
                        override var context: Context = Context()
 ) : Interpreter<Any> {
+    private val dataTypeCache: MutableMap<String, DataType<*>> = mutableMapOf()
+    private val functionsCache: MutableMap<String, Function<*>> = mutableMapOf()
+
     override val interpreterForEvaluatingVariables: Interpreter<*>
         get() { return this }
 
@@ -24,27 +27,45 @@ class TypedInterpreter(private val dataTypes: List<DataType<*>> = listOf(),
 
     override fun evaluate(expression: String, context: Context): Any = evaluateOrNull(expression, context) as Any
     override fun evaluateOrNull(expression: String, context: Context): Any? {
-        this.context = this.context.merge(context)
-
+        val fullContext = this.context.merge(context)
         val input = expression.trim()
-        return dataType(input) ?: variable(input) ?: function(input)
+        return functionFromCache(input, fullContext)
+            ?: dataTypeFromCache(input)
+            ?: dataType(input)
+            ?: variable(input, fullContext)
+            ?: function(input, fullContext)
     }
 
-    private fun dataType(expression: String) = dataTypes
-        .asSequence()
-        .map { it.convert(expression, this) }
-        .filterNotNull()
-        .firstOrNull()
+    private fun dataType(expression: String, interpreter: TypedInterpreter = this) =
+        find(dataTypes, { it.convert(expression, interpreter) }, { dataTypeCache[expression] = it })
 
-    private fun function(expression: String) = functions
-        .reversed()
-        .asSequence()
-        .map { it.convert(expression, this, context) }
-        .filterNotNull()
-        .firstOrNull()
+    private fun function(expression: String, context: Context, interpreter: TypedInterpreter = this) =
+        find(functions.reversed(), { it.convert(expression, interpreter, context) }, { functionsCache[expression] = it })
 
-    private fun variable(expression: String): Any? = context.variables
+    private fun variable(expression: String, context: Context): Any? =
+        find(context.variables, expression) { it }
+
+    private fun dataTypeFromCache(expression: String, interpreter: TypedInterpreter = this) =
+        find(dataTypeCache, expression) { it.convert(expression, interpreter) }
+
+    private fun functionFromCache(expression: String, context: Context, interpreter: TypedInterpreter = this) =
+        find(functionsCache, expression) { it.convert(expression, interpreter, context) }
+
+    private fun <T, R> find(source: List<T>, match: (T) -> R, cache: (T) -> Unit) = source
+        .asSequence()
+        .map { it to match(it) }
+        .filter { it.second != null }
+        .firstOrNull()
+        .alsoIfNotNull { cache(it.first) }
+        ?.second
+
+    private fun <T, R> find(source: Map<String, T>, key: String, call: (T) -> R) = source
         .entries
-        .firstOrNull { it.key == expression }
-        ?.value
+        .firstOrNull { it.key == key }
+        ?.run { call(value) }
+}
+
+inline fun <T> T?.alsoIfNotNull(block: (T) -> Unit): T? {
+    if (this != null) block(this)
+    return this
 }
