@@ -6,7 +6,7 @@ import kotlin.test.assertNull
 
 class TypedInterpreter_Function_IntegrationTest {
     @Test
-    fun whenEvaluatedWithFunction_thenReturnsThePlainValue() {
+    fun whenEvaluatedWithFunction_thenReturnsTheComputedValue() {
         val string = DataType(listOf(
             Literal("a") { "a" },
             Literal("b") { "b" }
@@ -19,7 +19,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     @Test
-    fun whenEvaluatedWithFunctionWithMultipleUse_thenReturnsThePlainValue() {
+    fun whenEvaluatedWithFunctionWithMultipleUse_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(multiplyOperator()))
@@ -30,7 +30,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     @Test
-    fun whenEvaluatedWithFunctionBackwards_thenReturnsThePlainValue() {
+    fun whenEvaluatedWithFunctionBackwards_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(multiplyOperator(), addOperator()))
@@ -40,8 +40,15 @@ class TypedInterpreter_Function_IntegrationTest {
         assertEquals( 14, value)
     }
 
-    interface plusable {
-        fun plus(other: plusable): plusable
+    @Test
+    fun whenEvaluatedWithContextVariables_thenReturnsTheComputedValue() {
+        val literal = Literal { value, _ -> value.toIntOrNull() }
+        val integer = DataType(listOf(literal))
+        val interpreter = TypedInterpreter(listOf(integer), listOf(multiplyOperator()), Context(mapOf("y" to 2)))
+
+        val value = interpreter.evaluate("x * y * 3", Context(mapOf("x" to 6)))
+
+        assertEquals( 36, value)
     }
 
     private fun concatOperator(): Function<String> {

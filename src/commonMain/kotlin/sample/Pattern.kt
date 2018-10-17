@@ -13,9 +13,8 @@ data class PatternOptions(val backwardMatch: Boolean = false)
 
 class Pattern<T, I: Interpreter<*>>(val elements: List<PatternElement>,
                                     val options: PatternOptions = PatternOptions(),
-                                    val context: Context = Context(),
                                     val matcher: MatcherBlock<T, I>) {
-    fun matches(string: String, from: Int = 0, interpreter: I): MatchResult {
+    fun matches(string: String, from: Int = 0, interpreter: I, context: Context): MatchResult {
         val variableProcessor = VariableProcessor(interpreter.interpreterForEvaluatingVariables, context)
         val result = Matcher<T>(elements, options, variableProcessor).match(string, from) { matcher(it, interpreter) }
         if (result is MatchResult.ExactMatch<*>) {
