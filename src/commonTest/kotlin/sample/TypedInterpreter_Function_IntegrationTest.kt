@@ -4,9 +4,9 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import sample.Keyword.Type.*
 
-class TypedInterpreter_Function_IntegrationTest {
+class TypedInterpreter_Pattern_IntegrationTest {
     @Test
-    fun whenEvaluatedWithFunction_thenReturnsTheComputedValue() {
+    fun whenEvaluatedWithPattern_thenReturnsTheComputedValue() {
         val string = DataType(listOf(
             Literal("a") { "a" },
             Literal("b") { "b" }
@@ -19,7 +19,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     @Test
-    fun whenEvaluatedWithFunctionWithMultipleUse_thenReturnsTheComputedValue() {
+    fun whenEvaluatedWithPatternWithMultipleUse_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(multiplyOperator()))
@@ -30,7 +30,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     @Test
-    fun whenEvaluatedWithFunctionBackwards_thenReturnsTheComputedValue() {
+    fun whenEvaluatedWithPatternBackwards_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(multiplyOperator(), addOperator()))
@@ -41,7 +41,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     @Test
-    fun whenEvaluatedWithNonCommutativeFunctionBackwards_thenReturnsTheComputedValue() {
+    fun whenEvaluatedWithNonCommutativePatternBackwards_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(subtractOperator()))
@@ -52,7 +52,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     @Test
-    fun whenEvaluatedWithNonCommutativeFunctionWithParentheses_thenReturnsTheComputedValue() {
+    fun whenEvaluatedWithNonCommutativePatternWithParentheses_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(parentheses(), subtractOperator(), addOperator()))
@@ -63,7 +63,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     @Test
-    fun whenEvaluatedWithFunctionWithSimpleParentheses_thenReturnsTheComputedValue() {
+    fun whenEvaluatedWithPatternWithSimpleParentheses_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(parentheses(), addOperator()))
@@ -74,7 +74,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     @Test
-    fun whenEvaluatedWithFunctionWithParentheses_thenReturnsTheComputedValue() {
+    fun whenEvaluatedWithPatternWithParentheses_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(parentheses(), multiplyOperator(), addOperator()))
@@ -96,7 +96,7 @@ class TypedInterpreter_Function_IntegrationTest {
     }
 
     @Test
-    fun whenEvaluatedWithFunctionWithEmbeddedParentheses_thenReturnsTheComputedValue() {
+    fun whenEvaluatedWithPatternWithEmbeddedParentheses_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(parentheses(), subtractOperator()))
@@ -117,35 +117,18 @@ class TypedInterpreter_Function_IntegrationTest {
         assertEquals( 36, value)
     }
 
-    private fun concatOperator(): Function<String>  = Function(Variable<String>("lhs") + Keyword("+") + Variable<String>("rhs")) {
-        val lhs = variables["lhs"] as? String ?: return@Function null
-        val rhs = variables["rhs"] as? String ?: return@Function null
-        lhs + rhs
+    private fun concatOperator(): Pattern<String, TypedInterpreter> = infixOperator("+") { a: String, b: String -> a + b }
+    private fun multiplyOperator(): Pattern<Int, TypedInterpreter> = infixOperator("*") { a: Int, b: Int -> a * b }
+    private fun addOperator(): Pattern<Int, TypedInterpreter> = infixOperator("+") { a: Int, b: Int -> a + b }
+    private fun subtractOperator(): Pattern<Int, TypedInterpreter> = infixOperator("-") { a: Int, b: Int -> a - b }
+
+    private fun <L, R, T> infixOperator(symbol: String, reduce: (L, R) -> T): Pattern<T, TypedInterpreter> = Pattern(Variable<T>("lhs") + Keyword(symbol) + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
+        val lhs = variables["lhs"] as? L ?: return@Pattern null
+        val rhs = variables["rhs"] as? R ?: return@Pattern null
+        reduce(lhs, rhs)
     }
 
-    private fun multiplyOperator(): Function<Int> {
-        val pattern = Pattern<Int, TypedInterpreter>(
-            Variable<Int>("lhs") + Keyword("*") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
-            val lhs = variables["lhs"] as? Int ?: return@Pattern null
-            val rhs = variables["rhs"] as? Int ?: return@Pattern null
-            lhs * rhs
-        }
-        return Function(listOf(pattern))
-    }
-
-    private fun addOperator(): Function<Int> = Function(Variable<Int>("lhs") + Keyword("+") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
-        val lhs = variables["lhs"] as? Int ?: return@Function null
-        val rhs = variables["rhs"] as? Int ?: return@Function null
-        lhs + rhs
-    }
-
-    private fun subtractOperator(): Function<Int> = Function(Variable<Int>("lhs") + Keyword("-") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
-        val lhs = variables["lhs"] as? Int ?: return@Function null
-        val rhs = variables["rhs"] as? Int ?: return@Function null
-        lhs - rhs
-    }
-
-    private fun parentheses(): Function<Any>  = Function(Keyword("(", OPENING_TAG) + Variable<Int>("body") + Keyword(")", CLOSING_TAG)) {
+    private fun parentheses(): Pattern<Any, TypedInterpreter> = Pattern(Keyword("(", OPENING_TAG) + Variable<Int>("body") + Keyword(")", CLOSING_TAG)) {
         variables["body"]
     }
 }

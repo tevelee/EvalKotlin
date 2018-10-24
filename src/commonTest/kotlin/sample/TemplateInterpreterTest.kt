@@ -9,7 +9,7 @@ class TemplateInterpreterTest {
         val integer = DataType(listOf(Literal { value, _ -> value.toIntOrNull() }))
         val interpreter = TypedInterpreter(listOf(integer), listOf(addOperator()))
 
-        val templateInterpreter = StringTemplateInterpreter(listOf(printFunction()), interpreter)
+        val templateInterpreter = StringTemplateInterpreter(listOf(printPattern()), interpreter)
 
         val value = templateInterpreter.evaluate("a {{ 1 + 2 }} b")
 
@@ -29,16 +29,16 @@ class TemplateInterpreterTest {
         assertEquals("a x b", value)
     }
 
-    private fun addOperator(): Function<Int> = infixOperator("+") { a: Int, b: Int -> a + b }
-    private fun equalsOperator(): Function<Boolean> = infixOperator("==") { a: Int, b: Int -> a == b }
+    private fun addOperator(): Pattern<Int, TypedInterpreter> = infixOperator("+") { a: Int, b: Int -> a + b }
+    private fun equalsOperator(): Pattern<Boolean, TypedInterpreter> = infixOperator("==") { a: Int, b: Int -> a == b }
 
-    private fun <L, R, T> infixOperator(symbol: String, reduce: (L, R) -> T): Function<T> = Function(Variable<T>("lhs") + Keyword(symbol) + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
-        val lhs = variables["lhs"] as? L ?: return@Function null
-        val rhs = variables["rhs"] as? R ?: return@Function null
+    private fun <L, R, T> infixOperator(symbol: String, reduce: (L, R) -> T): Pattern<T, TypedInterpreter> = Pattern(Variable<T>("lhs") + Keyword(symbol) + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
+        val lhs = variables["lhs"] as? L ?: return@Pattern null
+        val rhs = variables["rhs"] as? R ?: return@Pattern null
         reduce(lhs, rhs)
     }
 
-    private fun printFunction() = Pattern<String, TemplateInterpreter<String>>(Keyword("{{") + Variable<Any>("body") + Keyword("}}")) {
+    private fun printPattern() = Pattern<String, TemplateInterpreter<String>>(Keyword("{{") + Variable<Any>("body") + Keyword("}}")) {
         evaluator.print(variables["body"] ?: "")
     }
 

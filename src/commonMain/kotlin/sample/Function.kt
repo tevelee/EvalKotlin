@@ -3,20 +3,14 @@ package sample
 import kotlin.math.min
 import sample.Keyword.Type.*
 
-class Function<T>(val patterns: List<Pattern<T, TypedInterpreter>>) {
-    constructor(elements: List<PatternElement>,
-                options: PatternOptions = PatternOptions(),
-                matcher: PatternBody<TypedInterpreter>.() -> T?): this(listOf(Pattern(elements, options, matcher)))
-
-    fun convert(input: String,
-                interpreter: TypedInterpreter,
-                context: Context,
-                connectedRanges: List<IntRange>): Any? {
-        val result = matchStatement(patterns, input, interpreter, context, 0, connectedRanges)
-        return when (result) {
-            is MatchResult.ExactMatch<*> -> result.output
-            else -> null
-        }
+fun <T> Pattern<T, TypedInterpreter>.convert(input: String,
+                                             interpreter: TypedInterpreter,
+                                             context: Context,
+                                             connectedRanges: List<IntRange>): Any? {
+    val result = matchStatement(listOf(this), input, interpreter, context, 0, connectedRanges)
+    return when (result) {
+        is MatchResult.ExactMatch<*> -> result.output
+        else -> null
     }
 }
 

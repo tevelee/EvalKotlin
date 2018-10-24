@@ -17,11 +17,11 @@ interface Interpreter<EvaluatedType>: Evaluator<EvaluatedType>, Printer {
 }
 
 class TypedInterpreter(private val dataTypes: List<DataType<*>> = listOf(),
-                       private val functions: List<Function<*>> = listOf(),
+                       private val functions: List<Pattern<*, TypedInterpreter>> = listOf(),
                        override var context: Context = Context()
 ) : Interpreter<Any> {
     private val dataTypeCache: MutableMap<String, DataType<*>> = mutableMapOf()
-    private val functionsCache: MutableMap<String, Function<*>> = mutableMapOf()
+    private val functionsCache: MutableMap<String, Pattern<*, TypedInterpreter>> = mutableMapOf()
 
     override val interpreterForEvaluatingVariables: Interpreter<*>
         get() { return this }
@@ -33,7 +33,7 @@ class TypedInterpreter(private val dataTypes: List<DataType<*>> = listOf(),
     override fun evaluateOrNull(expression: String, context: Context): Any? {
         context.merge(this.context)
         val input = expression.trim()
-        val connectedRanges = collectConnectedRanges(input, functions.flatMap { it.patterns })
+        val connectedRanges = collectConnectedRanges(input, functions)
         return functionFromCache(input, context, connectedRanges)
             ?: dataTypeFromCache(input)
             ?: dataType(input)
