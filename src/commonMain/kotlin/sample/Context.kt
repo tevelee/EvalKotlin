@@ -4,7 +4,12 @@ class ExpressionInfo(val input: String,
                      val output: Any,
                      val patterns: String,
                      val variables: Map<String, Any>) {
-    override fun toString(): String = "(input=$input, output=$output, patterns=$patterns, variables:$variables)"
+    override fun toString(): String = "(" +
+            "input=$input, " +
+            "output=$output, " +
+            "patterns=$patterns, " +
+            "variables:$variables" +
+            ")"
 }
 
 class ExpressionStack(val variables: Map<String, Any>,

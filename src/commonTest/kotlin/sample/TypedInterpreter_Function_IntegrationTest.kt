@@ -2,6 +2,7 @@ package sample
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import sample.Keyword.Type.*
 
 class TypedInterpreter_Function_IntegrationTest {
     @Test
@@ -100,10 +101,9 @@ class TypedInterpreter_Function_IntegrationTest {
         val integer = DataType(listOf(literal))
         val interpreter = TypedInterpreter(listOf(integer), listOf(parentheses(), subtractOperator()))
 
-//        assertEquals( 4, interpreter.evaluate("(6 - (4 - 2))"))
-//        val value = interpreter.evaluate("12 - (6 - (4 - 2))")
-//
-//        assertEquals( 8, value)
+        val value = interpreter.evaluate("12 - (6 - (4 - 2))")
+
+        assertEquals( 8, value)
     }
 
     @Test
@@ -158,7 +158,7 @@ class TypedInterpreter_Function_IntegrationTest {
 
     private fun parentheses(): Function<Any> {
         val pattern = Pattern<Any, TypedInterpreter>(
-            Keyword("(", Keyword.Type.OPENING_TAG) + Variable<Int>("body") + Keyword(")", Keyword.Type.CLOSING_TAG)) { variables, _, _ ->
+            Keyword("(", OPENING_TAG) + Variable<Int>("body") + Keyword(")", CLOSING_TAG)) { variables, _, _ ->
             variables["body"]
         }
         return Function(listOf(pattern))

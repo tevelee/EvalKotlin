@@ -1,9 +1,13 @@
 package sample
 
 import kotlin.math.min
+import sample.Keyword.Type.*
 
 class Function<T>(val patterns: List<Pattern<T, TypedInterpreter>>) {
-    fun convert(input: String, interpreter: TypedInterpreter, context: Context, connectedRanges: List<IntRange>): Any? {
+    fun convert(input: String,
+                interpreter: TypedInterpreter,
+                context: Context,
+                connectedRanges: List<IntRange>): Any? {
         val result = matchStatement(patterns, input, interpreter, context, 0, connectedRanges)
         return when (result) {
             is MatchResult.ExactMatch<*> -> result.output
@@ -14,7 +18,12 @@ class Function<T>(val patterns: List<Pattern<T, TypedInterpreter>>) {
 
 data class MatchStatementResult<T, I : Interpreter<*>>(val element: Pattern<T, I>, val result: MatchResult)
 
-fun <T, I : Interpreter<*>> matchStatement(statements: List<Pattern<T, I>>, input: String, interpreter: I, context: Context, startIndex: Int = 0, connectedRanges: List<IntRange> = listOf()): MatchResult {
+fun <T, I : Interpreter<*>> matchStatement(statements: List<Pattern<T, I>>,
+                                           input: String,
+                                           interpreter: I,
+                                           context: Context,
+                                           startIndex: Int = 0,
+                                           connectedRanges: List<IntRange> = listOf()): MatchResult {
     val results = statements.asSequence().map {
         MatchStatementResult(it, it.matches(input, startIndex, interpreter, context, connectedRanges))
     }
@@ -29,8 +38,8 @@ fun <T, I : Interpreter<*>> matchStatement(statements: List<Pattern<T, I>>, inpu
 internal fun collectConnectedRanges(input: String, statements: List<Pattern<*, *>>): List<IntRange> =
     statements.mapNotNull { pattern ->
         val keywords = pattern.elements.map { it as? Keyword }.filterNotNull()
-        val openingKeywords = keywords.filter { it.type == Keyword.Type.OPENING_TAG }.map { it.name }
-        val closingKeywords = keywords.filter { it.type == Keyword.Type.CLOSING_TAG }.map { it.name }
+        val openingKeywords = keywords.filter { it.type == OPENING_TAG }.map { it.name }
+        val closingKeywords = keywords.filter { it.type == CLOSING_TAG }.map { it.name }
 
         if (openingKeywords.isEmpty() && closingKeywords.isEmpty()) return@mapNotNull null
 

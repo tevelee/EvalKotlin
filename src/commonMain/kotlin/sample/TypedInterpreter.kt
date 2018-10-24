@@ -1,7 +1,5 @@
 package sample
 
-import kotlin.reflect.KFunction1
-
 interface Evaluator<EvaluatedType> {
     fun evaluate(expression: String): EvaluatedType
     fun evaluateOrNull(expression: String): EvaluatedType?

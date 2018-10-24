@@ -5,12 +5,12 @@ import kotlin.test.assertEquals
 
 class TemplateInterpreterTest {
     @Test
-    fun whenEvaluated_thenReturnsPlainValue() {
+    fun `whenEvaluated thenReturnsPlainValue`() {
         val integer = DataType(listOf(Literal { value, _ -> value.toIntOrNull() }))
         val interpreter = TypedInterpreter(listOf(integer), listOf(addOperator()))
 
         val print = Pattern<String, TemplateInterpreter<String>>(Keyword("{{") + Variable<Any>("body") + Keyword("}}")) {
-            variables, interpreter, _ -> interpreter.print(variables["body"] ?: "")
+            variables, evaluator, _ -> evaluator.print(variables["body"] ?: "")
         }
         val templateInterpreter = StringTemplateInterpreter(listOf(print), interpreter)
 

@@ -10,7 +10,8 @@ open class TemplateInterpreter<T>(open val statements: List<Pattern<T, TemplateI
     override fun evaluateOrNull(expression: String): T? = evaluateOrNull(expression, Context())
 
     override fun evaluate(expression: String, context: Context): T = evaluateOrNull(expression, context) as T
-    override fun evaluateOrNull(expression: String, context: Context): T? = error("Shouldn't instantiate `TemplateInterpreter` directly. Please subclass with a dedicated type instead")
+    override fun evaluateOrNull(expression: String, context: Context): T? =
+        error("Shouldn't instantiate `TemplateInterpreter` directly. Please subclass with a dedicated type instead")
 
     fun evaluate(expression: String, context: Context, reducer: TemplateReducer<T>): T?{
         context.merge(this.context)
@@ -41,7 +42,12 @@ open class TemplateInterpreter<T>(open val statements: List<Pattern<T, TemplateI
 class StringTemplateInterpreter(
     override val statements: List<Pattern<String, TemplateInterpreter<String>>> = listOf(),
     override val interpreter: TypedInterpreter = TypedInterpreter(),
-    override val context: Context = Context()) : TemplateInterpreter<String>(statements, interpreter, context) {
-    override fun evaluateOrNull(expression: String, context: Context): String? =
-        evaluate(expression, context, TemplateReducer("", { a, b -> a + b }, { a, b -> a + b }))
+    override val context: Context = Context()
+) : TemplateInterpreter<String>(statements, interpreter, context) {
+    override fun evaluateOrNull(expression: String, context: Context): String? {
+        val reducer = TemplateReducer("",
+            { a, b -> a + b },
+            { a, b -> a + b })
+        return evaluate(expression, context, reducer)
+    }
 }
