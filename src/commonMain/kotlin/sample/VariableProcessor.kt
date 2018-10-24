@@ -12,5 +12,3 @@ class VariableProcessor(private val interpreter: Interpreter<*>, private val con
         return variable.metadata.map(value, interpreter)
     }
 }
-
-inline fun <T> T.applyIf(condition: Boolean, transform: (T) -> T): T = if (condition) transform(this) else this

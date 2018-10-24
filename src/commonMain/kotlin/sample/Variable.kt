@@ -13,8 +13,6 @@ data class VariableOptions(val interpreted : Boolean = true,
     fun builder(): Builder = Builder(interpreted, trimmed, exhaustive, acceptsNullValue)
 }
 
-fun VariableOptions.transform(block: VariableOptions.Builder.() -> Unit) = builder().apply(block).build()
-
 open class Variable<T>(
     val name: String,
     val options: VariableOptions = VariableOptions(),
@@ -31,8 +29,6 @@ open class Variable<T>(
     }
     fun builder(): Builder<T> = Builder(name, options, map)
 }
-
-fun <T> Variable<T>.transform(block: Variable.Builder<T>.() -> Unit) = builder().apply(block).build()
 
 class TemplateVariable(
     name: String,

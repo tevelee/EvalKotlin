@@ -48,9 +48,3 @@ class Pattern<T, I: Interpreter<*>>(elements: List<PatternElement>,
         }.joinToString(" ")
     }
 }
-
-fun <T> List<T>.transform(block: MutableList<T>.() -> Unit): List<T> = toMutableList().apply { this.block() }
-fun <T> List<T>.replace(index: Int, item: T): List<T> = transform {
-    removeAt(index)
-    add(index, item)
-}
