@@ -18,7 +18,7 @@ class Pattern<T, I: Interpreter<*>>(elements: List<PatternElement>,
     private fun replaceLastElementNotToBeShortestMatch(elements: List<PatternElement>): List<PatternElement> {
         val index = if (options.backwardMatch) 0 else elements.lastIndex
         val variable = elements[index] as? Variable<*> ?: return elements
-        val newVariable= variable.transform { options = options.transform { exhaustive = true } }
+        val newVariable= variable.copy(options = variable.options.copy(exhaustive = true))
         return elements.replace(index, newVariable)
     }
 

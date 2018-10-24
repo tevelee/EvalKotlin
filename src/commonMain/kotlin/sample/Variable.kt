@@ -28,13 +28,15 @@ open class Variable<T>(
         fun build() = Variable(name, options, map)
     }
     fun builder(): Builder<T> = Builder(name, options, map)
+
+    fun copy(options: VariableOptions = this.options): Variable<T> = Variable(name, options, map)
 }
 
 class TemplateVariable(
     name: String,
     options: VariableOptions = VariableOptions(),
     map: (input: String, interpreter: StringTemplateInterpreter) -> String? = { value, _ -> value }
-) : Variable<String>(name, options.transform { interpreted = false }, { value, interpreter ->
+) : Variable<String>(name, options.copy(interpreted = false), { value, interpreter ->
     val stringValue = value as? String ?: ""
     val stringInterpreter = interpreter as StringTemplateInterpreter
     val result = if (options.interpreted) stringInterpreter.evaluate(stringValue) else stringValue

@@ -6,6 +6,3 @@ fun <T> List<T>.replace(index: Int, item: T): List<T> = transform {
     add(index, item)
 }
 inline fun <T> T.applyIf(condition: Boolean, transform: (T) -> T): T = if (condition) transform(this) else this
-
-fun VariableOptions.transform(block: VariableOptions.Builder.() -> Unit) = builder().apply(block).build()
-fun <T> Variable<T>.transform(block: Variable.Builder<T>.() -> Unit) = builder().apply(block).build()

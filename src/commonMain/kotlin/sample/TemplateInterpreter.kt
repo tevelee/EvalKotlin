@@ -1,5 +1,7 @@
 package sample
 
+import sample.MatchResult.*
+
 open class TemplateInterpreter<T>(open val statements: List<Pattern<T, TemplateInterpreter<T>>> = listOf(),
                                   open val interpreter: TypedInterpreter = TypedInterpreter(),
                                   override val context: Context) : Interpreter<T> {
@@ -21,11 +23,11 @@ open class TemplateInterpreter<T>(open val statements: List<Pattern<T, TemplateI
         do {
             val result = matchStatement(statements, expression, this, context, position)
             when (result) {
-                is MatchResult.NoMatch, is MatchResult.PossibleMatch -> {
+                is NoMatch, is PossibleMatch -> {
                     output = reducer.reduceCharacter(output, expression[position])
                     position += 1
                 }
-                is MatchResult.ExactMatch<*> -> {
+                is ExactMatch<*> -> {
                     output = reducer.reduceValue(output, result.output as T)
                     position += result.length
                 }

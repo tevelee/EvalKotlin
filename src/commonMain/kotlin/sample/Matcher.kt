@@ -1,6 +1,7 @@
 package sample
 
 import sample.Keyword.Type.*
+import sample.MatchResult.*
 
 data class ActiveVariable(val name: String, var value: String, val metadata: Variable<*>)
 
@@ -22,14 +23,14 @@ class Matcher<T>(
             val element = elements[elementIndex]
             val result = element.matches(remainder, options)
             when (result) {
-                is MatchResult.NoMatch -> {
+                is NoMatch -> {
                     currentlyActiveVariable
-                        ?: return MatchResult.NoMatch
+                        ?: return NoMatch
                     remainder = proceed(currentlyActiveVariable, remainder)
                 }
-                is MatchResult.PossibleMatch ->
-                    return MatchResult.PossibleMatch
-                is MatchResult.AnyMatch -> {
+                is PossibleMatch ->
+                    return PossibleMatch
+                is AnyMatch -> {
                     if (currentlyActiveVariable == null && element is Variable<*>)
                         currentlyActiveVariable = ActiveVariable(element.name, String(), element)
                     if (result.exhaustive) {
@@ -37,13 +38,13 @@ class Matcher<T>(
                             remainder = proceed(currentlyActiveVariable, remainder)
                         if (remainder.isEmpty()) {
                             registerVariable(currentlyActiveVariable, variables)
-                                ?: return MatchResult.PossibleMatch
+                                ?: return PossibleMatch
                             elementIndex = nextElement(elementIndex)
                         }
                     } else
                         elementIndex = nextElement(elementIndex)
                 }
-                is MatchResult.ExactMatch<*> -> {
+                is ExactMatch<*> -> {
                     val position =
                         if (options.backwardMatch) remainder.length
                         else trimmed.length - remainder.length
@@ -72,9 +73,9 @@ class Matcher<T>(
 
         val output = renderer(variables)
         return if (output != null)
-            MatchResult.ExactMatch(string.length - startIndex - remainder.length, output, variables)
+            ExactMatch(string.length - startIndex - remainder.length, output, variables)
         else
-            MatchResult.NoMatch
+            NoMatch
     }
 
     private fun isEmbedded(element: PatternElement, input: String, position: Int): Boolean {

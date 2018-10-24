@@ -2,6 +2,7 @@ package sample
 
 import kotlin.math.min
 import sample.Keyword.Type.*
+import sample.MatchResult.*
 
 fun <T> Pattern<T, TypedInterpreter>.convert(input: String,
                                              interpreter: TypedInterpreter,
@@ -9,7 +10,7 @@ fun <T> Pattern<T, TypedInterpreter>.convert(input: String,
                                              connectedRanges: List<IntRange>): Any? {
     val result = matchStatement(listOf(this), input, interpreter, context, 0, connectedRanges)
     return when (result) {
-        is MatchResult.ExactMatch<*> -> result.output
+        is ExactMatch<*> -> result.output
         else -> null
     }
 }
@@ -25,11 +26,11 @@ fun <T, I : Interpreter<*>> matchStatement(statements: List<Pattern<T, I>>,
     val results = statements.asSequence().map {
         MatchStatementResult(it, it.matches(input, startIndex, interpreter, context, connectedRanges))
     }
-    val matchingElement = results.firstOrNull { it.result is MatchResult.ExactMatch<*> }
+    val matchingElement = results.firstOrNull { it.result is ExactMatch<*> }
     return when {
         matchingElement != null -> matchingElement.result
-        results.any { it.result is MatchResult.PossibleMatch } -> MatchResult.PossibleMatch
-        else -> MatchResult.NoMatch
+        results.any { it.result is PossibleMatch } -> PossibleMatch
+        else -> NoMatch
     }
 }
 

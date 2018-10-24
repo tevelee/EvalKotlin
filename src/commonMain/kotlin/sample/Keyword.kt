@@ -1,5 +1,7 @@
 package sample
 
+import sample.MatchResult.*
+
 class Keyword(val name: String,
               val type: Type = Type.GENERIC): PatternElement {
     enum class Type {
@@ -13,9 +15,9 @@ class Keyword(val name: String,
             if (options.backwardMatch) { a, b -> a.endsWith(b) }
             else { a, b -> a.startsWith(b) }
         return when {
-            name == prefix || checker.invoke(prefix, name) -> MatchResult.ExactMatch(name.length, name, mapOf())
-            checker.invoke(name, prefix) -> MatchResult.PossibleMatch
-            else -> MatchResult.NoMatch
+            name == prefix || checker.invoke(prefix, name) -> ExactMatch(name.length, name, mapOf())
+            checker.invoke(name, prefix) -> PossibleMatch
+            else -> NoMatch
         }
     }
 }
