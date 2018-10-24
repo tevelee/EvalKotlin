@@ -62,7 +62,9 @@ class Matcher<T>(
                         currentlyActiveVariable = null
                         elementIndex = nextElement(elementIndex)
                         remainder = drop(remainder, result.length)
-                        remainder = trim(remainder)
+                        if (elementIndex < elements.lastIndex && element is Keyword) {
+                            remainder = trim(remainder)
+                        }
                     }
                 }
             }
@@ -126,7 +128,7 @@ class Matcher<T>(
         if (options.backwardMatch) elementIndex >= 0 else elementIndex <= elements.lastIndex
 
     private fun trim(remainder: String): String =
-        if (options.backwardMatch) remainder.trimStart() else remainder.trimEnd()
+        if (options.backwardMatch) remainder.trimEnd() else remainder.trimStart()
 
     private fun appendNextCharacterToVariable(currentlyActiveVariable: ActiveVariable, remainder: String) {
         if (options.backwardMatch) {

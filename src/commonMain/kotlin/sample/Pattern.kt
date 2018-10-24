@@ -28,7 +28,7 @@ class Pattern<T, I: Interpreter<*>>(elements: List<PatternElement>,
                 interpreter: I,
                 context: Context,
                 connectedRanges: List<IntRange>): MatchResult {
-        val variableProcessor = VariableProcessor(interpreter.interpreterForEvaluatingVariables, context)
+        val variableProcessor = VariableProcessor(interpreter, context)
         val matcher = Matcher<T>(elements, options, variableProcessor)
         val result = matcher.match(string, startIndex, connectedRanges) {
             matcher(it, interpreter, context)

@@ -33,3 +33,14 @@ open class Variable<T>(
 }
 
 fun <T> Variable<T>.transform(block: Variable.Builder<T>.() -> Unit) = builder().apply(block).build()
+
+class TemplateVariable(
+    name: String,
+    options: VariableOptions = VariableOptions(),
+    map: (input: String, interpreter: StringTemplateInterpreter) -> String? = { value, _ -> value }
+) : Variable<String>(name, options.transform { interpreted = false }, { value, interpreter ->
+    val stringValue = value as? String ?: ""
+    val stringInterpreter = interpreter as StringTemplateInterpreter
+    val result = if (options.interpreted) stringInterpreter.evaluate(stringValue) else stringValue
+    map(result, stringInterpreter)
+})
