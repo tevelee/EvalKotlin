@@ -23,13 +23,23 @@ class Pattern<T, I: Interpreter<*>>(elements: List<PatternElement>,
         return elements.replace(index, newVariable)
     }
 
-    fun matches(string: String, startIndex: Int = 0, interpreter: I, context: Context): MatchResult {
+    fun matches(string: String, startIndex: Int = 0, interpreter: I, context: Context, connectedRanges: List<IntRange>): MatchResult {
         val variableProcessor = VariableProcessor(interpreter.interpreterForEvaluatingVariables, context)
-        val result = Matcher<T>(elements, options, variableProcessor).match(string, startIndex) { matcher(it, interpreter, context) }
+        val result = Matcher<T>(elements, options, variableProcessor).match(string, startIndex, connectedRanges) { matcher(it, interpreter, context) }
         if (result is MatchResult.ExactMatch<*>) {
-            //TODO: print debug info
+            context.debugInfo[string] = ExpressionInfo(string, result.output!!, pattern(), result.variables)
         }
         return result
+    }
+
+    private fun pattern(): String {
+        return elements.map {
+            return when (it) {
+                is Keyword -> it.name
+                is Variable<*> -> "{${it.name}}"
+                else -> ""
+            }
+        }.joinToString(" ")
     }
 }
 

@@ -4,8 +4,8 @@
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="3" platform="JavaScript " useProjectSettings="false" isTestModule="true" externalProjectId="EvalKotlin">
         <sourceSets>
-          <sourceSet>EvalKotlin_commonTest</sourceSet>
           <sourceSet>EvalKotlin_jsMain</sourceSet>
+          <sourceSet>EvalKotlin_commonTest</sourceSet>
           <sourceSet>EvalKotlin_commonMain</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>

@@ -83,24 +83,36 @@ class TypedInterpreter_Function_IntegrationTest {
         assertEquals( 20, value)
     }
 
-//    @Test
-//    fun whenEvaluatedWithFunctionWithEmbeddedParentheses_thenReturnsTheComputedValue() {
-//        val literal = Literal { value, _ -> value.toIntOrNull() }
-//        val integer = DataType(listOf(literal))
-//        val interpreter = TypedInterpreter(listOf(integer), listOf(parentheses(), multiplyOperator(), addOperator()))
+    @Test
+    fun whenEvaluatedWithMultipleOperators_thenReturnsTheComputedValue() {
+        val literal = Literal { value, _ -> value.toIntOrNull() }
+        val integer = DataType(listOf(literal))
+        val interpreter = TypedInterpreter(listOf(integer), listOf(parentheses(), subtractOperator()))
+
+        val value = interpreter.evaluate("6 - (4 - 2)")
+
+        assertEquals( 4, value)
+    }
+
+    @Test
+    fun whenEvaluatedWithFunctionWithEmbeddedParentheses_thenReturnsTheComputedValue() {
+        val literal = Literal { value, _ -> value.toIntOrNull() }
+        val integer = DataType(listOf(literal))
+        val interpreter = TypedInterpreter(listOf(integer), listOf(parentheses(), subtractOperator()))
+
+//        assertEquals( 4, interpreter.evaluate("(6 - (4 - 2))"))
+//        val value = interpreter.evaluate("12 - (6 - (4 - 2))")
 //
-//        val value = interpreter.evaluate("2 + (3 * (5 - 1))")
-//
-//        assertEquals( 14, value)
-//    }
+//        assertEquals( 8, value)
+    }
 
     @Test
     fun whenEvaluatedWithContextVariables_thenReturnsTheComputedValue() {
         val literal = Literal { value, _ -> value.toIntOrNull() }
         val integer = DataType(listOf(literal))
-        val interpreter = TypedInterpreter(listOf(integer), listOf(multiplyOperator()), Context(mapOf("y" to 2)))
+        val interpreter = TypedInterpreter(listOf(integer), listOf(multiplyOperator()), Context(mutableMapOf("y" to 2)))
 
-        val value = interpreter.evaluate("x * y * 3", Context(mapOf("x" to 6)))
+        val value = interpreter.evaluate("x * y * 3", Context(mutableMapOf("x" to 6)))
 
         assertEquals( 36, value)
     }

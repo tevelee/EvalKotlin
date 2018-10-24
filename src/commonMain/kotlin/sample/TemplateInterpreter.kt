@@ -13,12 +13,12 @@ open class TemplateInterpreter<T>(open val statements: List<Pattern<T, TemplateI
     override fun evaluateOrNull(expression: String, context: Context): T? = error("Shouldn't instantiate `TemplateInterpreter` directly. Please subclass with a dedicated type instead")
 
     fun evaluate(expression: String, context: Context, reducer: TemplateReducer<T>): T?{
-        val fullContext = this.context.merge(context)
+        context.merge(this.context)
         var output = reducer.initialValue
 
         var position = 0
         do {
-            val result = matchStatement(statements, expression, this, fullContext)
+            val result = matchStatement(statements, expression, this, context, position)
             when (result) {
                 is MatchResult.NoMatch, is MatchResult.PossibleMatch -> {
                     output = reducer.reduceCharacter(output, expression[position])
@@ -34,6 +34,8 @@ open class TemplateInterpreter<T>(open val statements: List<Pattern<T, TemplateI
 
         return output
     }
+
+    override fun print(input: Any): String = interpreter.print(input)
 }
 
 class StringTemplateInterpreter(

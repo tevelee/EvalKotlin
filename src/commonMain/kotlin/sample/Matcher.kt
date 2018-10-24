@@ -7,7 +7,7 @@ class Matcher<T>(
     val options: PatternOptions,
     val processor: VariableProcessor
 ) {
-    fun match(string: String, startIndex: Int = 0, renderer: (variables: Map<String, Any>) -> T?): MatchResult {
+    fun match(string: String, startIndex: Int = 0, connectedRanges: List<IntRange>, renderer: (variables: Map<String, Any>) -> T?): MatchResult {
         var currentlyActiveVariable: ActiveVariable? = null
         var elementIndex = initialIndex()
         val trimmed = string.substring(startIndex = startIndex)
@@ -18,11 +18,11 @@ class Matcher<T>(
             val result = element.matches(remainder, options)
             when (result) {
                 is MatchResult.NoMatch -> {
-                    currentlyActiveVariable ?: return MatchResult.NoMatch()
+                    currentlyActiveVariable ?: return MatchResult.NoMatch
                     remainder = proceed(currentlyActiveVariable, remainder)
                 }
                 is MatchResult.PossibleMatch ->
-                    return MatchResult.PossibleMatch()
+                    return MatchResult.PossibleMatch
                 is MatchResult.AnyMatch -> {
                     if (currentlyActiveVariable == null && element is Variable<*>)
                         currentlyActiveVariable = ActiveVariable(element.name, String(), element)
@@ -30,18 +30,18 @@ class Matcher<T>(
                         if (currentlyActiveVariable != null)
                             remainder = proceed(currentlyActiveVariable, remainder)
                         if (remainder.isEmpty()) {
-                            registerVariable(currentlyActiveVariable, variables) ?: return MatchResult.PossibleMatch()
+                            registerVariable(currentlyActiveVariable, variables) ?: return MatchResult.PossibleMatch
                             elementIndex = nextElement(elementIndex)
                         }
                     } else
                         elementIndex = nextElement(elementIndex)
                 }
                 is MatchResult.ExactMatch<*> -> {
-                    if (isEmbedded(element, string.substring(startIndex = startIndex), trimmed.length - remainder.length)) {
+                    val position = if (options.backwardMatch) remainder.length else trimmed.length - remainder.length
+                    val isOpeningOrClosingKeyword = element is Keyword && element.type != Keyword.Type.GENERIC
+                    if (connectedRanges.any { it.contains(position) } && !isOpeningOrClosingKeyword) {
                         if (currentlyActiveVariable != null)
                             remainder = proceed(currentlyActiveVariable, remainder)
-                        else
-                            elementIndex = nextElement(elementIndex)
                     } else {
                         variables.putAll(result.variables)
                         registerVariable(currentlyActiveVariable, variables)
@@ -58,41 +58,7 @@ class Matcher<T>(
         return if (output != null)
             MatchResult.ExactMatch(string.length - startIndex - remainder.length, output, variables)
         else
-            MatchResult.NoMatch()
-    }
-
-    private fun isEmbedded(element: PatternElement, input: String, position: Int): Boolean {
-        if (element is Keyword && element.type == Keyword.Type.CLOSING_TAG) {
-            val closingPosition = closingPosition(input) ?: return false
-            return position < closingPosition
-        }
-        return false
-    }
-
-    private fun closingPosition(input: String, startIndex: Int = 0): Int? {
-        val opening =
-            elements.firstOrNull { it is Keyword && it.type == Keyword.Type.OPENING_TAG } as? Keyword ?: return null
-        val closing =
-            elements.firstOrNull { it is Keyword && it.type == Keyword.Type.CLOSING_TAG } as? Keyword ?: return null
-        var counter = 0
-        var position = startIndex
-        do {
-            val openingIndex = input.indexOf(opening.name, position)
-            val closingIndex = input.indexOf(opening.name, position)
-            val isCloseTagEarlier = openingIndex != -1 && closingIndex != -1 && closingIndex < openingIndex
-
-            if (openingIndex != -1 && !isCloseTagEarlier) {
-                counter++
-                position = openingIndex + opening.name.length
-            } else if (closingIndex != -1) {
-                counter--
-                if (counter == 0) return closingIndex
-                position = closingIndex + closing.name.length
-            } else {
-                break
-            }
-        } while (true)
-        return null
+            MatchResult.NoMatch
     }
 
     private fun initialIndex(): Int = if (options.backwardMatch) elements.lastIndex else 0

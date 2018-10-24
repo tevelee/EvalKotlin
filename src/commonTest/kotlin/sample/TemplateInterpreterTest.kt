@@ -9,9 +9,8 @@ class TemplateInterpreterTest {
         val integer = DataType(listOf(Literal { value, _ -> value.toIntOrNull() }))
         val interpreter = TypedInterpreter(listOf(integer), listOf(addOperator()))
 
-        val print = Pattern<String, TemplateInterpreter<String>>(Keyword("{{") + Variable<String>("body", VariableOptions(interpreted = false)) + Keyword("}}")) {
-            variables, interpreter, context -> val body = variables["body"] as? String ?: return@Pattern null
-            interpreter.evaluate(body, context)
+        val print = Pattern<String, TemplateInterpreter<String>>(Keyword("{{") + Variable<Any>("body") + Keyword("}}")) {
+            variables, interpreter, _ -> interpreter.print(variables["body"] ?: "")
         }
         val templateInterpreter = StringTemplateInterpreter(listOf(print), interpreter)
 
