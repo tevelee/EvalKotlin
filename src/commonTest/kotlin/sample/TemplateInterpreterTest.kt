@@ -29,33 +29,22 @@ class TemplateInterpreterTest {
         assertEquals("a x b", value)
     }
 
-    private fun addOperator(): Function<Int> {
-        val pattern = Pattern<Int, TypedInterpreter>(
-            Variable<Int>("lhs") + Keyword("+") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) { variables, _, _ ->
-            val lhs = variables["lhs"] as? Int ?: return@Pattern null
-            val rhs = variables["rhs"] as? Int ?: return@Pattern null
-            lhs + rhs
-        }
-        return Function(listOf(pattern))
-    }
+    private fun addOperator(): Function<Int> = infixOperator("+") { a: Int, b: Int -> a + b }
+    private fun equalsOperator(): Function<Boolean> = infixOperator("==") { a: Int, b: Int -> a == b }
 
-    private fun equalsOperator(): Function<Boolean> {
-        val pattern = Pattern<Boolean, TypedInterpreter>(
-            Variable<Boolean>("lhs") + Keyword("==") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) { variables, _, _ ->
-            val lhs = variables["lhs"] as? Int ?: return@Pattern null
-            val rhs = variables["rhs"] as? Int ?: return@Pattern null
-            lhs == rhs
-        }
-        return Function(listOf(pattern))
+    private fun <L, R, T> infixOperator(symbol: String, reduce: (L, R) -> T): Function<T> = Function(Variable<T>("lhs") + Keyword(symbol) + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
+        val lhs = variables["lhs"] as? L ?: return@Function null
+        val rhs = variables["rhs"] as? R ?: return@Function null
+        reduce(lhs, rhs)
     }
 
     private fun printFunction() = Pattern<String, TemplateInterpreter<String>>(Keyword("{{") + Variable<Any>("body") + Keyword("}}")) {
-            variables, evaluator, _ -> evaluator.print(variables["body"] ?: "")
+        evaluator.print(variables["body"] ?: "")
     }
 
-    private fun ifStatement() = Pattern<String, TemplateInterpreter<String>>(Keyword("{%") + Keyword("if") + Variable<Boolean>("condition") + Keyword("%}") + TemplateVariable("body") + Keyword("{% endif %}")) { variables, _, _ ->
+    private fun ifStatement() = Pattern<String, TemplateInterpreter<String>>(Keyword("{%") + Keyword("if") + Variable<Boolean>("condition") + Keyword("%}") + TemplateVariable("body") + Keyword("{% endif %}")) {
         val condition = variables["condition"] as? Boolean ?: return@Pattern null
         val body = variables["body"] as? String ?: return@Pattern null
-        if (condition) body else null
+        if (condition) evaluator.evaluate(body, context) else null
     }
 }

@@ -7,13 +7,12 @@ interface PatternElement {
 operator fun PatternElement.plus(other: PatternElement) = listOf(this, other)
 operator fun List<PatternElement>.plus(other: PatternElement) = transform { add(other) }
 
-typealias MatcherBlock<T, E> = (variables: Map<String, Any>, evaluator: E, context: Context) -> T?
-
 data class PatternOptions(val backwardMatch: Boolean = false)
+data class PatternBody<E>(val variables: Map<String, Any>, val evaluator: E, val context: Context)
 
 class Pattern<T, I: Interpreter<*>>(elements: List<PatternElement>,
-                                    val options: PatternOptions = PatternOptions(),
-                                    val matcher: MatcherBlock<T, I>) {
+                                    private val options: PatternOptions = PatternOptions(),
+                                    val matcher: PatternBody<I>.() -> T?) {
     val elements = replaceLastElementNotToBeShortestMatch(elements)
 
     private fun replaceLastElementNotToBeShortestMatch(elements: List<PatternElement>): List<PatternElement> {
@@ -31,7 +30,7 @@ class Pattern<T, I: Interpreter<*>>(elements: List<PatternElement>,
         val variableProcessor = VariableProcessor(interpreter, context)
         val matcher = Matcher<T>(elements, options, variableProcessor)
         val result = matcher.match(string, startIndex, connectedRanges) {
-            matcher(it, interpreter, context)
+            PatternBody(it, interpreter, context).matcher()
         }
         if (result is MatchResult.ExactMatch<*>) {
             context.debugInfo[string] = ExpressionInfo(string, result.output!!, pattern(), result.variables)

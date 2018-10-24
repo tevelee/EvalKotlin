@@ -4,6 +4,10 @@ import kotlin.math.min
 import sample.Keyword.Type.*
 
 class Function<T>(val patterns: List<Pattern<T, TypedInterpreter>>) {
+    constructor(elements: List<PatternElement>,
+                options: PatternOptions = PatternOptions(),
+                matcher: PatternBody<TypedInterpreter>.() -> T?): this(listOf(Pattern(elements, options, matcher)))
+
     fun convert(input: String,
                 interpreter: TypedInterpreter,
                 context: Context,

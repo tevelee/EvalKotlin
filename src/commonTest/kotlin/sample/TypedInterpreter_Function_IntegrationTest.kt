@@ -117,18 +117,15 @@ class TypedInterpreter_Function_IntegrationTest {
         assertEquals( 36, value)
     }
 
-    private fun concatOperator(): Function<String> {
-        val pattern = Pattern<String, TypedInterpreter>(Variable<String>("lhs") + Keyword("+") + Variable<String>("rhs")) { variables, _, _ ->
-            val lhs = variables["lhs"] as? String ?: return@Pattern null
-            val rhs = variables["rhs"] as? String ?: return@Pattern null
-            lhs + rhs
-        }
-        return Function(listOf(pattern))
+    private fun concatOperator(): Function<String>  = Function(Variable<String>("lhs") + Keyword("+") + Variable<String>("rhs")) {
+        val lhs = variables["lhs"] as? String ?: return@Function null
+        val rhs = variables["rhs"] as? String ?: return@Function null
+        lhs + rhs
     }
 
     private fun multiplyOperator(): Function<Int> {
         val pattern = Pattern<Int, TypedInterpreter>(
-            Variable<Int>("lhs") + Keyword("*") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) { variables, _, _ ->
+            Variable<Int>("lhs") + Keyword("*") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
             val lhs = variables["lhs"] as? Int ?: return@Pattern null
             val rhs = variables["rhs"] as? Int ?: return@Pattern null
             lhs * rhs
@@ -136,31 +133,19 @@ class TypedInterpreter_Function_IntegrationTest {
         return Function(listOf(pattern))
     }
 
-    private fun addOperator(): Function<Int> {
-        val pattern = Pattern<Int, TypedInterpreter>(
-            Variable<Int>("lhs") + Keyword("+") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) { variables, _, _ ->
-            val lhs = variables["lhs"] as? Int ?: return@Pattern null
-            val rhs = variables["rhs"] as? Int ?: return@Pattern null
-            lhs + rhs
-        }
-        return Function(listOf(pattern))
+    private fun addOperator(): Function<Int> = Function(Variable<Int>("lhs") + Keyword("+") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
+        val lhs = variables["lhs"] as? Int ?: return@Function null
+        val rhs = variables["rhs"] as? Int ?: return@Function null
+        lhs + rhs
     }
 
-    private fun subtractOperator(): Function<Int> {
-        val pattern = Pattern<Int, TypedInterpreter>(
-            Variable<Int>("lhs") + Keyword("-") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) { variables, _, _ ->
-            val lhs = variables["lhs"] as? Int ?: return@Pattern null
-            val rhs = variables["rhs"] as? Int ?: return@Pattern null
-            lhs - rhs
-        }
-        return Function(listOf(pattern))
+    private fun subtractOperator(): Function<Int> = Function(Variable<Int>("lhs") + Keyword("-") + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
+        val lhs = variables["lhs"] as? Int ?: return@Function null
+        val rhs = variables["rhs"] as? Int ?: return@Function null
+        lhs - rhs
     }
 
-    private fun parentheses(): Function<Any> {
-        val pattern = Pattern<Any, TypedInterpreter>(
-            Keyword("(", OPENING_TAG) + Variable<Int>("body") + Keyword(")", CLOSING_TAG)) { variables, _, _ ->
-            variables["body"]
-        }
-        return Function(listOf(pattern))
+    private fun parentheses(): Function<Any>  = Function(Keyword("(", OPENING_TAG) + Variable<Int>("body") + Keyword(")", CLOSING_TAG)) {
+        variables["body"]
     }
 }
