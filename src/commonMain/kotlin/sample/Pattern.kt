@@ -4,9 +4,6 @@ interface PatternElement {
     fun matches(prefix: String, options: PatternOptions): MatchResult
 }
 
-operator fun PatternElement.plus(other: PatternElement) = listOf(this, other)
-operator fun List<PatternElement>.plus(other: PatternElement) = transform { add(other) }
-
 data class PatternOptions(val backwardMatch: Boolean = false)
 data class PatternBody<E>(val variables: Map<String, Any>, val evaluator: E, val context: Context)
 

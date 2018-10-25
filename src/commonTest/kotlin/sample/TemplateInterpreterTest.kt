@@ -32,7 +32,7 @@ class TemplateInterpreterTest {
     private fun addOperator(): Pattern<Int, TypedInterpreter> = infixOperator("+") { a: Int, b: Int -> a + b }
     private fun equalsOperator(): Pattern<Boolean, TypedInterpreter> = infixOperator("==") { a: Int, b: Int -> a == b }
 
-    private fun <L, R, T> infixOperator(symbol: String, reduce: (L, R) -> T): Pattern<T, TypedInterpreter> = Pattern(Variable<T>("lhs") + Keyword(symbol) + Variable<Int>("rhs"), PatternOptions(backwardMatch = true)) {
+    private fun <L, R, T> infixOperator(symbol: String, reduce: (L, R) -> T): Pattern<T, TypedInterpreter> = Pattern(Variable<L>("lhs") + symbol + Variable<R>("rhs"), PatternOptions(backwardMatch = true)) {
         val lhs = variables["lhs"] as? L ?: return@Pattern null
         val rhs = variables["rhs"] as? R ?: return@Pattern null
         reduce(lhs, rhs)
