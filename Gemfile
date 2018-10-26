@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+gem 'danger'
+gem 'danger-auto_label'
+gem 'danger-commit_lint'
+gem 'danger-mention'
+gem 'danger-pronto'
+gem 'danger-prose'
+gem 'danger-shellcheck'
+# gem 'danger-slather'
+gem 'danger-tailor'
+gem 'danger-welcome_message'
