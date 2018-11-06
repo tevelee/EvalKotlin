@@ -2,7 +2,7 @@
   <artifact type="jar" name="EvalKotlin-js">
     <output-path>$PROJECT_DIR$/build/libs</output-path>
     <root id="archive" name="EvalKotlin-js.jar">
-      <element id="module-output" name="EvalKotlin_jsMain" />
+      <element id="module-output" name="EvalKotlin.jsMain" />
     </root>
   </artifact>
 </component>
