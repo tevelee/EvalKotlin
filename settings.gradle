@@ -20,4 +20,5 @@ pluginManagement {
     }
 }
 rootProject.name = 'EvalKotlin'
-
+enableFeaturePreview('GRADLE_METADATA')
+enableFeaturePreview("STABLE_PUBLISHING")
